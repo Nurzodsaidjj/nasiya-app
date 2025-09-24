@@ -1,26 +1,26 @@
 import axios from "axios";
-import { loadState } from "../store/store";
+import { loadState } from "../storage/store";
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_LOGIN,
+  baseURL: import.meta.env.VITE_LOGIN || "http://157.230.248.45:5050/api/v1",
 });
 
 request.interceptors.request.use((config) => {
-  const admintoken = loadState("admin");
-  if (admintoken) {
-    config.headers.Authorization = `Bearer ${admintoken}`;
+  const adminToken = loadState("admin");
+  if (adminToken) {
+    config.headers.Authorization = `Bearer ${adminToken}`;
   }
   return config;
 });
+
 request.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    if (error.status == 403 || error.status == 401) {
-      localStorage.removeItem("token");
-      window.location.href == "/";
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      localStorage.removeItem("admin");
+      window.location.href = "/";
     }
+    return Promise.reject(error);
   }
 );
 
