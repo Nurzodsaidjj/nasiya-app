@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { adminDAta } from "../../types";
 import { useAdminQueryUsers } from "../../query/use-admin-query";
 import { useEffect } from "react";
+import { AxiosError } from "axios";
 
 const AdminEdit = () => {
   const [form] = Form.useForm();
@@ -35,7 +36,7 @@ const AdminEdit = () => {
           queryClient.invalidateQueries({ queryKey: ["admins"] });
           navigate("/");
         },
-        onError: (err: any) => {
+        onError: (err: AxiosError) => {
           const mes = err?.response?.data?.message;
           if (mes === "Email already exists") {
             form.setFields([

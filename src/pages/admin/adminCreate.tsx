@@ -3,6 +3,7 @@ import { useCreateAdmin } from "../../query/useCreateAdmin";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import type { adminDAta } from "../../types";
+import { AxiosError } from "axios";
 
 const AdminCreate = () => {
   const [form] = Form.useForm();
@@ -17,7 +18,7 @@ const AdminCreate = () => {
         queryClient.invalidateQueries({ queryKey: ["admins"] });
         navigate("/");
       },
-      onError: (err: any) => {
+      onError: (err: AxiosError) => {
         const mes = err?.response?.data?.message;
         form.setFields([
           {
