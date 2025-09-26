@@ -1,16 +1,49 @@
-import React from "react";
+import { message } from "antd";
+import React, { useEffect, useState } from "react";
 
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import Users from "./pages/Users"; 
+import Users from "./pages/Users";
+import AdminCreate from "./pages/admin/adminCreate";
+import AdminEdit from "./pages/admin/adminEdit";
 import LoginLayout from "./layout/login-layout.tsx";
 import HomeLayout from "./layout/admin-layout/home-layout.tsx";
 import { loadState } from "./storage/store.ts";
 
 const App = () => {
-  const token = loadState("admin") || sessionStorage.getItem("admin");
+  const [token, setToken] = useState<string | null>(
+    loadState("admin") || sessionStorage.getItem("admin")
+  );
+  const [role, setRole] = useState<string | null>(
+    loadState("role") || localStorage.getItem("role")
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(loadState("admin") || sessionStorage.getItem("admin"));
+      setRole(loadState("role") || localStorage.getItem("role"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    message.success("Test message: Success!");
+    message.error("Test message: Error!");
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -18,24 +51,40 @@ const App = () => {
           path="/login"
           element={
             <LoginLayout>
-              <Login />
+              <Login
+                onLoginSuccess={(newToken, newRole) => {
+                  setToken(newToken);
+                  setRole(newRole);
+                }}
+              />
             </LoginLayout>
           }
         />
-        <Route
-          path="/"
-          element={
-            token ? (
-              <HomeLayout>
-                <Home />
-              </HomeLayout>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route path="/home" element={<Navigate to="/" />} />
-        <Route path="/users" element={token ? <HomeLayout><Users /></HomeLayout> : <Navigate to="/login" />} />
+
+        {token ? (
+          <Route element={<HomeLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
+
+            {role === "SUPER ADMIN" && (
+              <>
+                <Route path="/users" element={<Users />} />
+                <Route path="/admincard" element={<AdminCreate />} />
+                <Route path="/admincard/:id" element={<AdminEdit />} />
+              </>
+            )}
+            {role === "ADMIN" && (
+              <Route path="*" element={<Navigate to="/" replace />} />
+            )}
+            {role === "STORE" && (
+              <Route path="*" element={<Navigate to="/" replace />} />
+            )}
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
+        ) : (
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        )}
       </Routes>
     </BrowserRouter>
   );

@@ -11,7 +11,7 @@ type LoginFields = {
   remember?: boolean;
 };
 
-const Login = () => {
+const Login = ({ onLoginSuccess }: { onLoginSuccess?: (token: string, role: string) => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,13 +23,22 @@ const Login = () => {
       });
 
       const token = res.data.data.token;
+      const role = res.data.data.role;
+
       if (values.remember) {
         saveState("admin", token);
+        saveState("role", role);
       } else {
-        sessionStorage.setItem("admin", token);
+        localStorage.setItem("admin", token);
+        localStorage.setItem("role", role);
       }
 
       message.success("Login muvaffaqiyatli!");
+
+      if (onLoginSuccess) {
+        onLoginSuccess(token, role);
+      }
+
       navigate("/", { replace: true });
     } catch (error: any) {
       message.error(

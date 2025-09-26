@@ -17,3 +17,7 @@ body {
 	height: 100vh;
 	background-image: url("./assets/images/bg-blur.jpg");
 }
+.crad__btn{
+	display: flex;
+	gap: 10px;
+}

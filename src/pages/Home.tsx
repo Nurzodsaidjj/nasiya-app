@@ -1,12 +1,8 @@
-import React from 'react';
+import React from "react";
+import { AdminUsers } from "./admin/adminUsers";
 
-const Home = () => {
-  return (
-    <div>
-      <h1>Bosh sahifa</h1>
-      <p>Admin panelga xush kelibsiz!</p>
-    </div>
-  );
-};
+const Home: React.FC = () => (
+  <AdminUsers />
+);
 
 export default Home;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,11 +11,9 @@ import { Button, Layout, Menu, theme } from "antd";
 
 const { Header, Sider, Content } = Layout;
 
-interface HomeLayoutProps {
-  children: React.ReactNode;
-}
+interface HomeLayoutProps {}
 
-const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
+const HomeLayout: React.FC<HomeLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const {
@@ -50,7 +48,6 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
               icon: <VideoCameraOutlined />,
               label: "Users",
             },
-          
           ]}
         />
       </Sider>
@@ -76,7 +73,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
             borderRadius: borderRadiusLG,
           }}
         >
-          {children}
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
