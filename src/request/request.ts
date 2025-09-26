@@ -2,7 +2,7 @@ import axios from "axios";
 import { loadState } from "../storage/store";
 
 const request = axios.create({
-  baseURL: import.meta.env.VITE_LOGIN || "http://157.230.248.45:5050/api/v1",
+  baseURL: import.meta.env.VITE_LOGIN || "https://157.230.248.45:5050/api/v1",
 });
 
 request.interceptors.request.use((config) => {
