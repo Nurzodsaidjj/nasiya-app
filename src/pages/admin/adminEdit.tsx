@@ -38,8 +38,16 @@ const AdminEdit = () => {
         },
         onError: (error: ErrorResponse | AxiosError) => {
           let mes = "Xatolik yuz berdi!";
-          if (error instanceof AxiosError && error.response?.data?.message) {
-            mes = error.response.data.message;
+          if (error instanceof AxiosError) {
+            if (
+              error.response?.data &&
+              typeof error.response.data === "object" &&
+              "message" in error.response.data
+            ) {
+              mes = (error.response.data as { message: string }).message;
+            } else if (error.message) {
+              mes = error.message;
+            }
           } else if ("message" in error) {
             mes = error.message;
           }
