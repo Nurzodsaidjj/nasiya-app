@@ -18,12 +18,17 @@ const AdminCreate = () => {
         queryClient.invalidateQueries({ queryKey: ["admins"] });
         navigate("/");
       },
-      onError: (err: AxiosError) => {
-        const mes = err?.response?.data?.message;
+      onError: (error: Error) => {
+        let mes = "Xatolik yuz berdi!";
+        if (error instanceof AxiosError && error.response?.data?.message) {
+          mes = error.response.data.message;
+        } else if (error.message) {
+          mes = error.message;
+        }
         form.setFields([
           {
             name: "password",
-            errors: [mes || "errors"],
+            errors: [mes],
           },
         ]);
       },

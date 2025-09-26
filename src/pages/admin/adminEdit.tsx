@@ -2,7 +2,7 @@ import { Button, Form, Input, message } from "antd";
 import { useEditAdmin } from "../../query/useEditAdmin";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import type { adminDAta } from "../../types";
+import type { adminDAta, ErrorResponse } from "../../types";
 import { useAdminQueryUsers } from "../../query/use-admin-query";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
@@ -36,8 +36,14 @@ const AdminEdit = () => {
           queryClient.invalidateQueries({ queryKey: ["admins"] });
           navigate("/");
         },
-        onError: (err: AxiosError) => {
-          const mes = err?.response?.data?.message;
+        onError: (error: ErrorResponse | AxiosError) => {
+          let mes = "Xatolik yuz berdi!";
+          if (error instanceof AxiosError && error.response?.data?.message) {
+            mes = error.response.data.message;
+          } else if ("message" in error) {
+            mes = error.message;
+          }
+
           if (mes === "Email already exists") {
             form.setFields([
               {
