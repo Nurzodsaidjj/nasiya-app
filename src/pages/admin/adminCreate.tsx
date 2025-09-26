@@ -8,7 +8,7 @@ const AdminCreate = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { mutate, isLoading } = useCreateAdmin();
+  const { mutate, isPending } = useCreateAdmin();
 
   const onFinish = (values: adminDAta) => {
     mutate(values, {
@@ -17,8 +17,8 @@ const AdminCreate = () => {
         queryClient.invalidateQueries({ queryKey: ["admins"] });
         navigate("/");
       },
-      onError: (err) => {
-        const mes = err?.response?.data?.error?.message;
+      onError: (err: any) => {
+        const mes = err?.response?.data?.message;
         form.setFields([
           {
             name: "password",
@@ -65,7 +65,7 @@ const AdminCreate = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={isLoading}>
+        <Button type="primary" htmlType="submit" loading={isPending}>
           Yaratish
         </Button>
       </Form.Item>

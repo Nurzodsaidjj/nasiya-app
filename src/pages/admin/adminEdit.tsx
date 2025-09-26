@@ -12,7 +12,7 @@ const AdminEdit = () => {
   const queryClient = useQueryClient();
   const { id } = useParams<{ id: string }>();
   const { data: admins, isLoading: isAdminsLoading } = useAdminQueryUsers();
-  const { mutate, isLoading: isUpdating } = useEditAdmin();
+  const { mutate, isPending: isUpdating } = useEditAdmin();
 
   const currentAdmin = admins?.find((admin) => admin.id === id);
 
@@ -35,8 +35,8 @@ const AdminEdit = () => {
           queryClient.invalidateQueries({ queryKey: ["admins"] });
           navigate("/");
         },
-        onError: (err) => {
-          const mes = err?.response?.data?.error?.message;
+        onError: (err: any) => {
+          const mes = err?.response?.data?.message;
           if (mes === "Email already exists") {
             form.setFields([
               {

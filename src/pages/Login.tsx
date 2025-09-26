@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { Form, Input, Button, Checkbox, Typography, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Form, Input, Button, Typography, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import logo from "../assets/images/logo.png";
 import { request } from "../request/request";
@@ -13,7 +13,6 @@ type LoginFields = {
 
 const Login = ({ onLoginSuccess }: { onLoginSuccess?: (token: string, role: string) => void }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const onFinish = async (values: LoginFields) => {
     try {
@@ -49,7 +48,7 @@ const Login = ({ onLoginSuccess }: { onLoginSuccess?: (token: string, role: stri
     }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed = () => {
     message.error("Formani to'g'ri to'ldiring!");
   };
 
