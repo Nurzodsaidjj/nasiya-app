@@ -74,7 +74,6 @@ NOTE: For the sake of brevity, the snippets below use the Google AI plugin, but 
 
 ## Usage Scenarios
 
-<example>
 
 ### Basic Inference (Text Generation)
 
@@ -96,9 +95,6 @@ export const basicInferenceFlow = ai.defineFlow(
 );
 ```
 
-</example>
-
-<example>
 
 ### Text-to-Speech (TTS) Generation
 
@@ -164,7 +160,6 @@ export const textToSpeechFlow = ai.defineFlow(
       model: googleAI.model('gemini-2.5-flash-preview-tts'),
       prompt: input.text,
       config: {
-        responseModalities: ['AUDIO'],
         speechConfig: {
           voiceConfig: {
             prebuiltVoiceConfig: {
@@ -211,7 +206,6 @@ export const multiSpeakerTextToSpeechFlow = ai.defineFlow(
       model: googleAI.model('gemini-2.5-flash-preview-tts'),
       prompt: input.text,
       config: {
-        responseModalities: ['AUDIO'],
         speechConfig: {
           multiSpeakerVoiceConfig: {
             speakerVoiceConfigs: [
@@ -247,9 +241,6 @@ export const multiSpeakerTextToSpeechFlow = ai.defineFlow(
 );
 ```
 
-</example>
-
-<example>
 
 ### Image Generation
 
@@ -290,9 +281,6 @@ export const imageGenerationFlow = ai.defineFlow(
 );
 ```
 
-</example>
-
-<example>
 
 ### Video Generation
 
@@ -356,8 +344,6 @@ export const videoGenerationFlow = ai.defineFlow(
   }
 );
 ```
-
-</example>
 
 ---
 

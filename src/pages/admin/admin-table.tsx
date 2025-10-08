@@ -1,5 +1,5 @@
 import { Button, Table } from "antd";
-import type { adminDAta } from "../../types";
+import type { adminDAta } from "";
 import type { ColumnsType } from "antd/es/table";
 import { useDeletemutation } from "../../query/useDeletemutation";
 import { useQueryClient } from "@tanstack/react-query";
@@ -50,7 +50,10 @@ export const AdminTable = ({ dataSource }: AdminTableProps) => {
             >
               Delete
             </Button>
-            <Button onClick={() => nav(`/admincard/${record.id}`)} type="primary">
+            <Button
+              onClick={() => nav(`/super-admin/admincard/${record.id}`)}
+              type="primary"
+            >
               EDIT
             </Button>
           </div>
@@ -61,7 +64,12 @@ export const AdminTable = ({ dataSource }: AdminTableProps) => {
   ];
   return (
     <>
-      <Table<adminDAta> rowKey="id" dataSource={dataSource} columns={columns} />
+      <Table<adminDAta>
+        rowKey="id"
+        dataSource={dataSource}
+        columns={columns}
+        scroll={{ x: "max-content" }}
+      />
     </>
   );
 };

@@ -6,22 +6,27 @@ const request = axios.create({
 });
 
 request.interceptors.request.use((config) => {
-  const adminToken = loadState("admin");
-  if (adminToken) {
-    config.headers.Authorization = `Bearer ${adminToken}`;
+  const role = loadState("role") || localStorage.getItem("role");
+
+  let tokenKey = "";
+  if (role === "SUPER ADMIN" || role === "ADMIN") {
+    tokenKey = "admin";
+  } else if (role === "STORE") {
+    tokenKey = "store";
   }
+
+  const token = loadState(tokenKey) || sessionStorage.getItem(tokenKey);
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   return config;
 });
 
 request.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      localStorage.removeItem("admin");
-      window.location.href = "/";
-    }
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export { request };

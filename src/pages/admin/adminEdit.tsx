@@ -2,8 +2,8 @@ import { Button, Form, Input, message } from "antd";
 import { useEditAdmin } from "../../query/useEditAdmin";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import type { adminDAta, ErrorResponse } from "../../types";
-import { useAdminQueryUsers } from "../../query/use-admin-query";
+import type { adminDAta, ErrorResponse } from "../../types/index";
+import { useAdminQueryUsers } from "../../query/useAdminQueryUsers";
 import { useEffect } from "react";
 import { AxiosError } from "axios";
 

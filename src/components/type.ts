@@ -45,5 +45,5 @@ export interface adminDAta {
   username: string;
   email: string;
   password?: string;
-  isActive?: boolean; // isActive maydonini qo'shish
+  isActive?: boolean;
 }

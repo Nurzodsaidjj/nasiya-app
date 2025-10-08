@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { AdminTable } from "./admin-table";
-import { useAdminQueryUsers } from "../../query/use-admin-query";
+import { useAdminQueryUsers } from "../../query/useAdminQueryUsers";
 import { useNavigate } from "react-router-dom";
 
 export const AdminUsers = () => {
@@ -11,7 +11,7 @@ export const AdminUsers = () => {
   }
   return (
     <>
-        <Button type="primary" onClick={()=>nav("/admincard")}  style={{marginBottom:"10px"}}>createAdmin</Button>
+        <Button type="primary" onClick={()=>nav("/super-admin/admincard")}  style={{marginBottom:"10px"}}>createAdmin</Button>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (

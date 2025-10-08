@@ -45,5 +45,39 @@ export interface adminDAta {
   username: string;
   email: string;
   password?: string;
-  isActive?: boolean; // isActive maydonini qo'shish
+  isActive?: boolean;
+}
+
+export interface Store {
+  id: string;
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  password?: string;
+  role: 'SUPER ADMIN' | 'ADMIN' | 'STORE';
+  wallet: number;
+  createdAt: string;
+}
+
+export interface Debtor {
+  id: string;
+  fullName: string;
+  address: string;
+  description?: string;
+  store: Store;
+  imagesDebtor?: { imageUrl: string }[];
+  createdAt: string;
+}
+
+export interface DebtorCreatePayload {
+  fullName: string;
+  address: string;
+  description?: string;
+  phoneNumber: string;
+  storeId: string;
+  image?: File;
+}
+
+export interface DebtorUpdatePayload extends DebtorCreatePayload {
+  id: string;
 }

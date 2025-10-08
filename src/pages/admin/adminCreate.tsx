@@ -2,7 +2,7 @@ import { Button, Form, Input, message } from "antd";
 import { useCreateAdmin } from "../../query/useCreateAdmin";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import type { adminDAta } from "../../types";
+import type { adminDAta } from "../../types/index";
 import { AxiosError } from "axios";
 
 const AdminCreate = () => {
